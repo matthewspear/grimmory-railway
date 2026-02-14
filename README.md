@@ -32,7 +32,7 @@ When creating a library, you'll be asked to add book directories:
 
 | Service | Image | Purpose |
 |---------|-------|---------|
-| BookLore | `booklore/booklore:latest` | App server (Tomcat on port 8080) |
+| BookLore | `booklore/booklore:latest` | App server (port 6060) |
 | MariaDB | `mariadb:latest` | Database |
 
 ### Volume Layout
