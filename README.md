@@ -1,43 +1,66 @@
 # BookLore on Railway
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/YOUR_TEMPLATE_SLUG?referralCode=matt)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/LcclVg?referralCode=matt)
 
-One-click deploy of [BookLore](https://booklore.org) — a self-hosted, multi-user digital library with smart shelves, auto metadata, built-in reader for EPUB/PDF/comics, Kobo & KOReader sync, and BookDrop auto-imports.
+One-click deploy of [BookLore](https://github.com/booklore-app/booklore) – a self-hosted book and audiobook manager with metadata fetching, reading progress tracking, and library organisation.
 
 ## What's Included
 
-- **BookLore** — web app on port 6060
-- **MySQL** — database (Railway managed)
-- **Persistent volume** — all data, books, and imports stored under one mount
+- **BookLore** – latest version, auto-updates with `:latest` tag
+- **MariaDB** – persistent database for your library metadata
+- **Persistent volume** – your books and app data survive redeploys
+
+## Getting Started
+
+After deploying, open your BookLore URL and create an account. You'll be prompted to set up your first library.
+
+### Setting Up Your Library
+
+When creating a library, you'll be asked to add book directories:
+
+1. Click **Add Book Folder** → **Browse for directories**
+2. Select **`/books`** – this is your main library folder (persistent, volume-backed)
+3. Optionally add **`/bookdrop`** – a watched inbox that auto-imports new files
+4. Click **Select Directories** → **Create Library**
+
+### Adding Books
+
+- **Via the UI** – use BookLore's built-in upload to add books directly
+- **Via Bookdrop** – any files placed in `/bookdrop` are automatically detected and imported into your library
 
 ## Architecture
 
-This template uses a thin Dockerfile wrapper around the official `booklore/booklore` image. A single Railway volume mounted at `/booklore-data` is symlinked to the three directories BookLore expects:
+| Service | Image | Purpose |
+|---------|-------|---------|
+| BookLore | `booklore/booklore:latest` | App server (Tomcat on port 8080) |
+| MariaDB | `mariadb:latest` | Database |
 
-- `/app/data` → app configuration & state
-- `/books` → your book library
-- `/bookdrop` → auto-import watched folder
+### Volume Layout
+
+Railway supports one volume per service. This template mounts a single volume at `/booklore-data` and uses bind mounts to map subdirectories:
+
+| Container Path | Backed By | Contents |
+|---------------|-----------|----------|
+| `/app/data` | `/booklore-data/app-data` | App config, covers, icons |
+| `/books` | `/booklore-data/books` | Your book library |
+| `/bookdrop` | Local (non-persistent) | Temporary import inbox |
+
+> `/bookdrop` is intentionally non-persistent – it's a transient inbox. Files are moved to `/books` after import.
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DATABASE_URL` | JDBC connection string | Wired to MySQL service |
-| `DATABASE_USERNAME` | DB user | Wired to MySQL service |
-| `DATABASE_PASSWORD` | DB password | Wired to MySQL service |
-| `TZ` | Timezone | `Etc/UTC` |
-| `USER_ID` | App user ID | `1000` |
-| `GROUP_ID` | App group ID | `1000` |
-| `DISK_TYPE` | Storage type | `LOCAL` |
+These are pre-configured in the template:
 
-## Post-Deploy
-
-1. Visit your Railway public URL
-2. Create your admin account
-3. Start uploading books!
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `TZ` | `Etc/UTC` | Timezone |
+| `DISK_TYPE` | `LOCAL` | Storage type |
+| `DATABASE_URL` | Auto-configured | MariaDB connection string |
+| `DATABASE_USERNAME` | `booklore` | DB user |
+| `DATABASE_PASSWORD` | Auto-generated | DB password |
 
 ## Links
 
-- [BookLore Docs](https://booklore.org/docs/getting-started)
 - [BookLore GitHub](https://github.com/booklore-app/booklore)
-- [Live Demo](https://demo.booklore.org) (user: `booklore`, pass: `9HC`)
+- [BookLore Docs](https://booklore-app.github.io/booklore-docs/)
+- [Railway Docs](https://docs.railway.com/)
