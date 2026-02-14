@@ -1,7 +1,9 @@
 FROM booklore/booklore:latest
 
-RUN mkdir -p /booklore-data/app-data /booklore-data/books /booklore-data/bookdrop \
-    && rm -rf /app/data /books /bookdrop \
-    && ln -s /booklore-data/app-data /app/data \
-    && ln -s /booklore-data/books /books \
-    && mkdir -p /bookdrop
+# Pre-create volume structure (will be populated at runtime)
+RUN mkdir -p /booklore-data/app-data /booklore-data/books /bookdrop
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
