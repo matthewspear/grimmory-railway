@@ -1,18 +1,18 @@
-# BookLore on Railway
+# Grimmory on Railway
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/LcclVg?referralCode=matt)
+Railway template wrapper for [Grimmory](https://github.com/grimmory-tools/grimmory), the community fork of BookLore.
 
-One-click deploy of [BookLore](https://github.com/booklore-app/booklore) – a self-hosted book and audiobook manager with metadata fetching, reading progress tracking, and library organisation.
+Grimmory is a self-hosted book and audiobook manager with metadata fetching, reading progress tracking, and library organisation.
 
 ## What's Included
 
-- **BookLore** – latest version from GitHub Container Registry
+- **Grimmory** – pinned to `grimmory/grimmory:v2.3.1` for predictable deploys
 - **MariaDB** – persistent database for your library metadata
 - **Persistent volume** – your books and app data survive redeploys
 
 ## Getting Started
 
-After deploying, open your BookLore URL and create an account. You'll be prompted to set up your first library.
+After deploying, open your Grimmory URL and create an account. You'll be prompted to set up your first library.
 
 ### Setting Up Your Library
 
@@ -25,19 +25,19 @@ When creating a library, you'll be asked to add book directories:
 
 ### Adding Books
 
-- **Via the UI** – use BookLore's built-in upload to add books directly
+- **Via the UI** – use Grimmory's built-in upload to add books directly
 - **Via Bookdrop** – any files placed in `/bookdrop` are automatically detected and imported into your library
 
 ## Architecture
 
 | Service | Image | Purpose |
 |---------|-------|---------|
-| BookLore | `ghcr.io/booklore-app/booklore:latest` | App server (port 6060) |
+| Grimmory | `grimmory/grimmory:v2.3.1` | App server (port 6060) |
 | MariaDB | `mariadb:latest` | Database |
 
 ### Volume Layout
 
-Railway supports one volume per service. This template mounts a single volume at `/booklore-data` and uses bind mounts to map subdirectories:
+Railway supports one volume per service. This template mounts a single volume at `/booklore-data` and maps subdirectories into the paths Grimmory expects:
 
 | Container Path | Backed By | Contents |
 |---------------|-----------|----------|
@@ -54,6 +54,7 @@ These are pre-configured in the template:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `TZ` | `Etc/UTC` | Timezone |
+| `PORT` | `6060` | Railway router port |
 | `DISK_TYPE` | `LOCAL` | Storage type |
 | `DATABASE_URL` | Auto-configured | MariaDB connection string |
 | `DATABASE_USERNAME` | `booklore` | DB user |
@@ -61,6 +62,6 @@ These are pre-configured in the template:
 
 ## Links
 
-- [BookLore GitHub](https://github.com/booklore-app/booklore)
-- [BookLore Docs](https://booklore-app.github.io/booklore-docs/)
+- [Grimmory GitHub](https://github.com/grimmory-tools/grimmory)
+- [Grimmory Docs](https://grimmory.org/docs)
 - [Railway Docs](https://docs.railway.com/)
