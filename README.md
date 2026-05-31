@@ -6,7 +6,7 @@ Grimmory is a self-hosted book and audiobook manager with metadata fetching, rea
 
 ## What's Included
 
-- **Grimmory** – pinned to `grimmory/grimmory:v2.3.1` for predictable deploys
+- **Grimmory** – pinned to `grimmory/grimmory:v3.1.0` for predictable deploys
 - **MariaDB** – persistent database for your library metadata
 - **Persistent volume** – your books and app data survive redeploys
 
@@ -32,7 +32,7 @@ When creating a library, you'll be asked to add book directories:
 
 | Service | Image | Purpose |
 |---------|-------|---------|
-| Grimmory | `grimmory/grimmory:v2.3.1` | App server (port 6060) |
+| Grimmory | `grimmory/grimmory:v3.1.0` | App server (port 6060) |
 | MariaDB | `mariadb:latest` | Database |
 
 ### Volume Layout

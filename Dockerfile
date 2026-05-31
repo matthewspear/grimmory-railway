@@ -1,4 +1,4 @@
-FROM grimmory/grimmory:v2.3.1
+FROM grimmory/grimmory:v3.1.0
 
 ENV PORT=6060
 
