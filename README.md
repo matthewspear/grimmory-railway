@@ -1,5 +1,7 @@
 # Grimmory on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/grimmory-1?referralCode=matt&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 Railway template wrapper for [Grimmory](https://github.com/grimmory-tools/grimmory), the community fork of BookLore.
 
 Grimmory is a self-hosted book and audiobook manager with metadata fetching, reading progress tracking, and library organisation.
